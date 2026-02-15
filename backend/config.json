@@ -1,5 +1,8 @@
 {
   "source_folder": "data",
   "backup_folder": "backups",
-  "backup_format": "zip"
+  "backup_format": "zip",
+  "backup_interval_minutes": 1,
+  "cleanup_interval_minutes": 60,
+  "max_backups": 5
 }

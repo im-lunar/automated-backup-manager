@@ -41,17 +41,14 @@ It mimics how real-world backup systems work at a basic level.
 ## Project Structure
 
 automated-backup-manager/
-│
 ├── backend/
-│ ├── backup.py
-│ ├── config.json
-│ └── logs/
-│ └── backup.log
-│
+│   ├── backup.py
+│   ├── config.json
+│   └── logs/
+│       └── backup.log
 ├── backups/
 ├── data/
 └── README.md
-
 
 
 ---

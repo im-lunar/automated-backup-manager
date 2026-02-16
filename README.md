@@ -53,6 +53,7 @@ automated-backup-manager/
 └── README.md
 
 
+
 ---
 
 ## Configuration
@@ -70,7 +71,3 @@ Example:
   "cleanup_interval_minutes": 60,
   "max_backups": 5
 }
-
-
-## Project Structure
-

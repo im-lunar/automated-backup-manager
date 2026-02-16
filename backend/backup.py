@@ -48,19 +48,35 @@ def run_scheduler():
     cleanup_interval = config.get("cleanup_interval_minutes", 60)
     schedule.every(cleanup_interval).minutes.do(clean_old_backups)
 
-    print(f"⏳Backup Scheduler Started (every {backup_interval} minute(s))")
-    logging.info("Backup scheduler started")
+    print(
+    f"⏳ Scheduler started | "
+    f"Backup every {backup_interval} min | "
+    f"Cleanup every {cleanup_interval} min"
+    )
+    logging.info(f"Scheduler started | Backup: {backup_interval} min | Cleanup: {cleanup_interval} min")
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
+    try:
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("🛑 Scheduler stopped by user")
+        logging.info("Scheduler stopped manually (KeyboardInterrupt)")
 
 def clean_old_backups():
-    MAX_BACKUPS = 3 
+    MAX_BACKUPS = config.get("max_backups", 5)
+    if MAX_BACKUPS <=0:
+        logging.warning(f"Invalid max_backups value: {MAX_BACKUPS}. Cleanup skipped")
+        print("⚠️ max_backups must be greater than 0. Cleanup skipped")
+        return
 
+    if not os.path.exists(BACKUP_FOLDER):
+        return
+    
     files = os.listdir(BACKUP_FOLDER)
     zip_files = [f for f in files if f.endswith(".zip")]
+    if not zip_files:
+        return
 
     filename_with_modified_time = {}
 

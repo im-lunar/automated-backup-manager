@@ -48,11 +48,17 @@ def run_scheduler():
     cleanup_interval = config.get("cleanup_interval_minutes", 60)
     schedule.every(cleanup_interval).minutes.do(clean_old_backups)
 
-    print(
-    f"⏳ Scheduler started | "
-    f"Backup every {backup_interval} min | "
-    f"Cleanup every {cleanup_interval} min"
-    )
+    max_backups = config.get("max_backups")
+
+    print("\n🚀 Automated Backup Manager Started")
+    print("===================================")
+    print(f"📁 Source Folder   : {SOURCE_FOLDER}")
+    print(f"💾 Backup Folder   : {BACKUP_FOLDER}")
+    print(f"⏳ Backup Interval : {backup_interval} minute(s)")
+    print(f"🧹 Cleanup Interval: {cleanup_interval} minute(s)")
+    print(f"📦 Max Backups     : {max_backups}")
+    print("===================================\n")
+
     logging.info(f"Scheduler started | Backup: {backup_interval} min | Cleanup: {cleanup_interval} min")
 
     try:
